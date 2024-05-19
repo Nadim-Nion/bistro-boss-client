@@ -2,15 +2,11 @@ import React from 'react';
 
 const Navbar = () => {
     const navItems = <>
-        <li><a>Item 1</a></li>
-        <li>
-            <a>Parent</a>
-            {/* <ul className="p-2">
-                <li><a>Submenu 1</a></li>
-                <li><a>Submenu 2</a></li>
-            </ul> */}
-        </li>
-        <li><a>Item 3</a></li>
+        <li><a>HOME</a></li>
+        <li><a>CONTACT US</a></li>
+        <li><a>DASHBOARD</a></li>
+        <li><a>OUR MENU</a></li>
+        <li><a>OUR SHOP</a></li>
     </>
 
     return (
@@ -33,7 +29,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Button</a>
+                    <a className="btn">SIGN OUT</a>
                 </div>
             </div>
         </div>
