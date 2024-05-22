@@ -4,7 +4,7 @@ import Cover from '../../SharedPage/Cover/Cover';
 import { Link } from 'react-router-dom';
 
 const MenuCategory = ({ items, title, description, img }) => {
-    const orderURL = title ? `/order/${title}` : '/order';
+    const orderURL = title ? `/order/${title}` : '/order/Salads';
 
     return (
         <div className='my-14'>
