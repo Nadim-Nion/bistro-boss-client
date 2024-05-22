@@ -4,6 +4,8 @@ import Cover from '../../SharedPage/Cover/Cover';
 import { Link } from 'react-router-dom';
 
 const MenuCategory = ({ items, title, description, img }) => {
+    const orderURL = title ? `/order/${title}` : '/order';
+
     return (
         <div className='my-14'>
             <div className='mb-12'>
@@ -17,7 +19,7 @@ const MenuCategory = ({ items, title, description, img }) => {
                     ></MenuItem>)
                 }
             </div>
-            <Link to={`/order/${title}`}>
+            <Link to={orderURL}>
                 <div className='flex justify-center mt-7'>
                     <button className="btn btn-outline mt-4 border-0 border-b-4">Order Now</button>
                 </div>

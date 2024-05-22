@@ -8,10 +8,12 @@ import OrderTab from '../OrderTab/OrderTab';
 import { useParams } from 'react-router-dom';
 
 const Order = () => {
-    const [tabIndex, setTabIndex] = useState(0);
-    const [menus] = useMenu();
+    const categories = ['Salads', 'Pizza', 'Soups', 'Desserts', 'Drinks'];
     const { category } = useParams();
-    console.log(category);
+    const initialIndex = categories.indexOf(category);
+    const [tabIndex, setTabIndex] = useState(initialIndex);
+    const [menus] = useMenu();
+
     const drinksMenus = menus.filter(menu => menu.category === 'drinks');
     const dessertMenus = menus.filter(menu => menu.category === 'dessert');
     const pizzaMenus = menus.filter(menu => menu.category === 'pizza');
@@ -23,7 +25,7 @@ const Order = () => {
             <Cover img={orderImg} title="Order Your Food" description="Would You Like To A Dish?"></Cover>
             <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
                 <TabList className="text-center py-16">
-                    <Tab>SALAD</Tab>
+                    <Tab>SALADS</Tab>
                     <Tab>PIZZA</Tab>
                     <Tab>SOUPS</Tab>
                     <Tab>DESSERTS</Tab>

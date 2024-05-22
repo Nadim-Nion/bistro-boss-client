@@ -34,7 +34,7 @@ const Menu = () => {
             {/* Dessert Menu Category */}
             <MenuCategory
                 items={dessertMenus}
-                title="Deserts"
+                title="Desserts"
                 description="Indulge your sweet tooth with our decadent dessert menu, featuring a delightful array of treats. Savor the rich, velvety chocolate lava cake, or enjoy the classic elegance of our cream with its perfectly caramelized top."
                 img={dessertImg}
             ></MenuCategory>
