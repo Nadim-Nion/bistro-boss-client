@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../providers/AuthProvider';
 import { Link } from 'react-router-dom';
-import loginImg from '../../assets/others/authentication2.png';
+import registerImg from '../../assets/others/authentication2.png';
 
-const Login = () => {
+
+const Register = () => {
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
     const { signIn } = useContext(AuthContext);
@@ -13,13 +14,14 @@ const Login = () => {
         loadCaptchaEnginge(6);
     }, []);
 
-    const handleLogin = event => {
+    const handleRegister = event => {
         event.preventDefault();
 
         const form = event.target;
+        const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        // console.log(email, password);
+        console.log(name, email, password);
 
         signIn(email, password)
             .then(result => {
@@ -45,13 +47,19 @@ const Login = () => {
 
     return (
         <div className="hero min-h-screen bg-base-200">
-            <div className="hero-content flex-col lg:flex-row">
+            <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center md:w-1/2 lg:text-left">
-                    <img src={loginImg} alt="" />
+                    <img src={registerImg} alt="" />
                 </div>
                 <div className="card md:w-1/2 max-w-sm shadow-2xl bg-base-100">
-                    <h1 className="text-2xl font-bold text-center mt-7">Login</h1>
-                    <form onSubmit={handleLogin} className="card-body">
+                    <h1 className="text-2xl font-bold text-center mt-7">Sign Up</h1>
+                    <form onSubmit={handleRegister} className="card-body">
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input type="text" name='name' placeholder="name" className="input input-bordered" required />
+                        </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -75,13 +83,13 @@ const Login = () => {
                             <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs mt-2">Validate</button>
                         </div>
                         <div className="form-control mt-6">
-                            <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
+                            <input disabled={disabled} className="btn btn-primary" type="submit" value="Sign Up" />
                         </div>
                     </form>
                     <p className='text-center my-6'>
-                        <small>New Here?
-                            <Link to="/register">
-                                <a className="link ml-2">Create a New Account</a>
+                        <small>Already Registered?
+                            <Link to="/login">
+                                <a className="link ml-2">Go to Log in</a>
                             </Link>
                         </small>
                     </p>
@@ -91,4 +99,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
