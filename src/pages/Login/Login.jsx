@@ -80,8 +80,8 @@ const Login = () => {
                     </form>
                     <p className='text-center my-6'>
                         <small>New Here?
-                            <Link to="/register">
-                                <a className="link ml-2">Create a New Account</a>
+                            <Link to="/register" className="link ml-2">
+                                Create a New Account
                             </Link>
                         </small>
                     </p>

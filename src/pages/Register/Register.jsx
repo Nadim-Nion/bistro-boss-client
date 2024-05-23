@@ -1,49 +1,18 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
-import { AuthContext } from '../../providers/AuthProvider';
 import { Link } from 'react-router-dom';
 import registerImg from '../../assets/others/authentication2.png';
-
+import { useForm } from "react-hook-form";
 
 const Register = () => {
-    const captchaRef = useRef(null);
-    const [disabled, setDisabled] = useState(true);
-    const { signIn } = useContext(AuthContext);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
-    useEffect(() => {
-        loadCaptchaEnginge(6);
-    }, []);
+    const onSubmit = (data) => {
+        console.log(data)
+    };
 
-    const handleRegister = event => {
-        event.preventDefault();
-
-        const form = event.target;
-        const name = form.name.value;
-        const email = form.email.value;
-        const password = form.password.value;
-        console.log(name, email, password);
-
-        signIn(email, password)
-            .then(result => {
-                const loggedUser = result.user;
-                console.log(loggedUser);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-
-    const handleValidateCaptcha = () => {
-        const user_captcha_value = captchaRef.current.value;
-        // console.log(user_captcha_value);
-
-        if (validateCaptcha(user_captcha_value)) {
-            setDisabled(false);
-        }
-        else {
-            setDisabled(true);
-        }
-    }
 
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -53,43 +22,41 @@ const Register = () => {
                 </div>
                 <div className="card md:w-1/2 max-w-sm shadow-2xl bg-base-100">
                     <h1 className="text-2xl font-bold text-center mt-7">Sign Up</h1>
-                    <form onSubmit={handleRegister} className="card-body">
+                    <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
-                            <input type="text" name='name' placeholder="name" className="input input-bordered" required />
+                            <input type="text" {...register('name', { required: true })} name='name' placeholder="name" className="input input-bordered" />
+                            {errors.name && <span className='text-red-600'>Name is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" name='email' placeholder="email" className="input input-bordered" required />
+                            <input type="email" {...register("email", { required: true })} name='email' placeholder="email" className="input input-bordered" />
+                            {errors.email && <span className='text-red-600'>Email is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" name='password' placeholder="password" className="input input-bordered" required />
+                            <input type="password" {...register('password', { required: true, minLength: 6, maxLength: 20 })} name='password' placeholder="password" className="input input-bordered" />
+                            {errors.password?.type === "required" && (
+                                <p className='text-red-600'>Password is required</p>
+                            )}
                             <label className="label">
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>
                         </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <LoadCanvasTemplate />
-                            </label>
-                            <input ref={captchaRef} type="text" name='captcha' placeholder="Type here" className="input input-bordered" required />
-                            <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs mt-2">Validate</button>
-                        </div>
                         <div className="form-control mt-6">
-                            <input disabled={disabled} className="btn btn-primary" type="submit" value="Sign Up" />
+                            <input className="btn btn-primary" type="submit" value="Sign Up" />
                         </div>
                     </form>
                     <p className='text-center my-6'>
                         <small>Already Registered?
-                            <Link to="/login">
-                                <a className="link ml-2">Go to Log in</a>
+                            <Link to="/login" className="link ml-2">
+                                Go to Log in
                             </Link>
                         </small>
                     </p>
