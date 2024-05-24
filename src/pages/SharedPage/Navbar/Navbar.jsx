@@ -11,6 +11,7 @@ const Navbar = () => {
         <li><Link>DASHBOARD</Link></li>
         <li><Link to="/menu">OUR MENU</Link></li>
         <li><Link to="/order/Salads">ORDER FOOD</Link></li>
+        <li className='mt-2 font-semibold'>{user?.displayName}</li>
     </>
 
     const handleSignOut = () => {
