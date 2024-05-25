@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
 import { FaRegCircleUser } from "react-icons/fa6";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -12,7 +13,15 @@ const Navbar = () => {
         <li><Link>DASHBOARD</Link></li>
         <li><Link to="/menu">OUR MENU</Link></li>
         <li><Link to="/order/Salads">ORDER FOOD</Link></li>
-        <li className='mt-2 font-semibold'>{user?.displayName}</li>
+        <li>
+            <Link to="/">
+                <button className="btn bg-opacity-40 btn-sm">
+                    <FaShoppingCart className='text-2xl' />
+                    <div className="badge badge-secondary">+0</div>
+                </button>
+            </Link>
+        </li>
+        {/* <li className='mt-2 font-semibold'>{user?.displayName}</li> */}
     </>
 
     const handleSignOut = () => {
