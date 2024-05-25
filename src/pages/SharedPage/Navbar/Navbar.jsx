@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
+import useCart from '../../../hooks/useCart';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const [cart] = useCart();
 
     const navItems = <>
         <li><Link>HOME</Link></li>
@@ -17,7 +19,7 @@ const Navbar = () => {
             <Link to="/">
                 <button className="btn bg-opacity-40 btn-sm">
                     <FaShoppingCart className='text-2xl' />
-                    <div className="badge badge-secondary">+0</div>
+                    <div className="badge badge-secondary">+{cart.length}</div>
                 </button>
             </Link>
         </li>
