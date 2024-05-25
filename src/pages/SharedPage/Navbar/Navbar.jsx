@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthProvider';
+import { FaRegCircleUser } from "react-icons/fa6";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -48,11 +49,13 @@ const Navbar = () => {
                         user ?
                             <>
                                 <button onClick={handleSignOut} className="btn btn-ghost">SIGN OUT</button>
+                                <FaRegCircleUser className='text-2xl ml-0' />
                             </>
                             :
                             <>
                                 <button className="btn btn-ghost">
                                     <Link to="/login">LOGIN</Link>
+                                    <FaRegCircleUser className='text-2xl ml-0' />
                                 </button>
                             </>
                     }
