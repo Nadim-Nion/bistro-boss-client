@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { FaCalendar, FaCommentDots, FaCreditCard, FaHome, FaListAlt, FaShoppingCart } from "react-icons/fa";
+import { IoMenu } from 'react-icons/io5';
+import { FaBasketShopping } from 'react-icons/fa6';
 
 const Dashboard = () => {
     return (
@@ -44,11 +46,30 @@ const Dashboard = () => {
                             My Booking
                         </NavLink>
                     </li>
+                    <div className="divider"></div>
+                    <li>
+                        <NavLink to='/'>
+                            <FaHome />
+                            Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/menu'>
+                            <IoMenu />
+                            Menu
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/order/Salads'>
+                            <FaBasketShopping />
+                            Order Food
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
 
             {/* Dashboard Content */}
-            <div className='flex-1'>
+            <div className='flex-1 m-8'>
                 <Outlet></Outlet>
             </div>
         </div>
