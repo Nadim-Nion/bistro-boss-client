@@ -5,10 +5,12 @@ import { Helmet } from 'react-helmet-async';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import Swal from 'sweetalert2';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const Register = () => {
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
 
     const {
         register,
@@ -28,15 +30,29 @@ const Register = () => {
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => {
                         console.log('User info updated successfully');
-                        reset();
 
-                        Swal.fire({
-                            icon: "success",
-                            title: "Congrats !!",
-                            text: "User created successfully",
-                        });
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
 
-                        navigate('/');
+                        // Create user entry to the db
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                console.log(res.data);
+
+                                if (res.data.insertedId) {
+                                    reset();
+
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Congrats !!",
+                                        text: "User created successfully",
+                                    });
+
+                                    navigate('/');
+                                }
+                            })
                     })
                     .catch(error => {
                         console.log(error);
