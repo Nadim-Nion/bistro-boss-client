@@ -3,8 +3,17 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { FaCalendar, FaCommentDots, FaCreditCard, FaHome, FaListAlt, FaShoppingCart } from "react-icons/fa";
 import { IoMenu } from 'react-icons/io5';
 import { FaBasketShopping } from 'react-icons/fa6';
+import { MdEmail } from "react-icons/md";
+import useCart from '../hooks/useCart';
 
 const Dashboard = () => {
+
+    const [cart] = useCart();
+
+    // TODO: Get the admin value from the database
+    const isAdmin = true;
+    console.log(isAdmin);
+
     return (
         <div className='flex'>
             {/* Dashboard Sidebar */}
@@ -31,7 +40,7 @@ const Dashboard = () => {
                     <li>
                         <NavLink to='/dashboard/cart'>
                             <FaShoppingCart />
-                            My Cart
+                            My Cart ({cart.length})
                         </NavLink>
                     </li>
                     <li>
@@ -46,6 +55,7 @@ const Dashboard = () => {
                             My Booking
                         </NavLink>
                     </li>
+                    {/* Shared Nav links */}
                     <div className="divider"></div>
                     <li>
                         <NavLink to='/'>
@@ -63,6 +73,12 @@ const Dashboard = () => {
                         <NavLink to='/order/Salads'>
                             <FaBasketShopping />
                             Order Food
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/order/contact'>
+                            <MdEmail />
+                            Contact
                         </NavLink>
                     </li>
                 </ul>
