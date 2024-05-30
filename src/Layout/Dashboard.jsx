@@ -5,13 +5,14 @@ import { IoMenu } from 'react-icons/io5';
 import { FaBasketShopping, FaBook, FaList, FaUsers, FaUtensils } from 'react-icons/fa6';
 import { MdEmail } from "react-icons/md";
 import useCart from '../hooks/useCart';
+import useAdmin from '../hooks/useAdmin';
 
 const Dashboard = () => {
 
     const [cart] = useCart();
 
     // TODO: Get the admin value from the database
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
 
     return (
         <div className='flex'>
