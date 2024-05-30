@@ -1,17 +1,56 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { FaTrashAlt } from 'react-icons/fa';
+import { FaUsers } from 'react-icons/fa6';
+import Swal from 'sweetalert2';
+
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: users = [] } = useQuery({
+    const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get('/users');
             return res.data;
         }
     });
+
+    const handleMakeAdmin = (user) => {
+        console.log(user);
+    }
+
+    const handleDelete = (user) => {
+        console.log(user);
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log('User has been deleted');
+
+                axiosSecure.delete(`/users/${user._id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your user has been deleted.",
+                                icon: "success"
+                            });
+                            refetch();
+                        }
+                    })
+            }
+        });
+    };
+
     return (
         <div >
             <div className='flex justify-evenly my-4'>
@@ -36,8 +75,16 @@ const AllUsers = () => {
                                 <th>{index + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                    <button onClick={() => handleMakeAdmin(user)} className="btn  bg-orange-600">
+                                        <FaUsers className='text-white text-2xl' />
+                                    </button>
+                                </td>
+                                <td>
+                                    <button onClick={() => handleDelete(user)} className="btn btn-ghost btn-lg">
+                                        <FaTrashAlt className='text-red-600' />
+                                    </button>
+                                </td>
                             </tr>)
                         }
                     </tbody>
