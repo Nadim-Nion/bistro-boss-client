@@ -3,16 +3,45 @@ import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 import useMenu from '../../../hooks/useMenu';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const MangeItems = () => {
-    const [menus] = useMenu();
+    const [menus, , refetch] = useMenu();
+    const axiosSecure = useAxiosSecure();
 
     const handleUpdateMenu = menu => {
         console.log(menu);
     }
 
     const handleDeleteMenu = menu => {
-        console.log(menu);
+        // console.log(menu);
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/menus/${menu._id}`);
+                // console.log(res.data);
+
+                if (res.data.deletedCount > 0) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: `${menu.name} has been deleted.`,
+                        icon: "success"
+                    });
+                    refetch();
+
+                }
+
+            }
+        });
     }
 
     return (
