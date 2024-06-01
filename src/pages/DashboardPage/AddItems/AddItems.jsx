@@ -3,16 +3,18 @@ import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 import { useForm } from 'react-hook-form';
 import { FaUtensils } from 'react-icons/fa';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-// console.log(image_hosting_key);
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-// console.log(image_hosting_api);
+
 
 const AddItems = () => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
 
     const onSubmit = async (data) => {
         console.log(data);
@@ -25,6 +27,33 @@ const AddItems = () => {
             }
         });
         console.log(res.data);
+
+        if (res.data.success) {
+            // Now send the menu item data to the MongoDB with the image URL
+            const menuItem = {
+                name: data.name,
+                category: data.category,
+                price: parseFloat(data.price),
+                recipe: data.recipe,
+                image: res.data.data.display_url
+            }
+
+            const menuRes = await axiosSecure.post('/menus', menuItem);
+            console.log(menuRes.data);
+
+            if (menuRes.data.insertedId) {
+                reset();
+
+                // show success alert
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `${data.name} is added to the menu`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }
     };
 
     return (
