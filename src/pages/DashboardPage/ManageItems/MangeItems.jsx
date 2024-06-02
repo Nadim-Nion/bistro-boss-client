@@ -5,14 +5,11 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { Link } from 'react-router-dom';
 
 const MangeItems = () => {
     const [menus, , refetch] = useMenu();
     const axiosSecure = useAxiosSecure();
-
-    const handleUpdateMenu = menu => {
-        console.log(menu);
-    }
 
     const handleDeleteMenu = menu => {
         // console.log(menu);
@@ -84,9 +81,11 @@ const MangeItems = () => {
                                     </td>
                                     <td>${menu.price}</td>
                                     <td>
-                                        <button onClick={() => handleUpdateMenu(menu)} className="btn  bg-orange-600">
-                                            <FiEdit className='text-white' />
-                                        </button>
+                                        <Link to={`/dashboard/updateItem/${menu._id}`}>
+                                            <button className="btn  bg-orange-600">
+                                                <FiEdit className='text-white' />
+                                            </button>
+                                        </Link>
                                     </td>
                                     <td>
                                         <button onClick={() => handleDeleteMenu(menu)} className="btn btn-ghost btn-lg">
