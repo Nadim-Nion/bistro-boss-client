@@ -2,9 +2,10 @@ import React from 'react';
 import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from './CheckoutForm';
 
 // Todo: Add a Publishable Key
-const stripePromise = loadStripe('');
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
 
 const Payment = () => {
     return (
@@ -12,7 +13,7 @@ const Payment = () => {
             <SectionTitle heading="Payment" subHeading="Please pay to buy"></SectionTitle>
             <div>
                 <Elements stripe={stripePromise}>
-                    <h2 className='text-4xl'>Payment Gateway Page</h2>
+                    <CheckoutForm></CheckoutForm>
                 </Elements>
             </div>
         </div>
