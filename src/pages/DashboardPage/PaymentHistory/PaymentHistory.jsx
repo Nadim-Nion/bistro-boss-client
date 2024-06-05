@@ -8,7 +8,7 @@ const PaymentHistory = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     const { data: payments = [] } = useQuery({
-        queryKey: ['paymentHistory'],
+        queryKey: ['payments', user.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/payments/${user.email}`);
             return res.data;
@@ -20,6 +20,7 @@ const PaymentHistory = () => {
         <div>
             <SectionTitle heading="Payment History" subHeading="Pay Now"></SectionTitle>
             <div>
+                <h2 className='text-3xl font-semibold my-3'> Total Payment: {payments.length}</h2>
                 <div className="overflow-x-auto">
                     <table className="table">
                         {/* head */}
@@ -39,7 +40,7 @@ const PaymentHistory = () => {
                                     <td>{index + 1}</td>
                                     <td>{payment.email}</td>
                                     <td>{payment.transactionId}</td>
-                                    <td>{payment.price}</td>
+                                    <td>${payment.price}</td>
                                     <td>{payment.date}</td>
                                 </tr>)
                             }
