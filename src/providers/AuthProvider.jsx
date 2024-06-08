@@ -52,6 +52,7 @@ const AuthProvider = ({ children }) => {
 
                         if (res.data.token) {
                             localStorage.setItem('access-token', res.data.token);
+                            setLoading(false);
                         }
                     })
 
@@ -59,8 +60,9 @@ const AuthProvider = ({ children }) => {
             else {
                 // Remove cookie from the client side
                 localStorage.removeItem('access-token');
+                setLoading(false);
             }
-            setLoading(false);
+            // setLoading(false);
         });
 
         return () => {

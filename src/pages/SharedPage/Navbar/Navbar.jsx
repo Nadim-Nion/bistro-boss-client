@@ -4,15 +4,23 @@ import { AuthContext } from '../../../providers/AuthProvider';
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from '../../../hooks/useCart';
+import useAdmin from '../../../hooks/useAdmin';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
     const [cart] = useCart();
+    const [isAdmin] = useAdmin();
 
     const navItems = <>
         <li><Link>HOME</Link></li>
         <li><Link>CONTACT US</Link></li>
-        <li><Link>DASHBOARD</Link></li>
+        {/* <li><Link>DASHBOARD</Link></li> */}
+        {
+            user && isAdmin && <li><Link to="/dashboard/adminHome">DASHBOARD</Link></li>
+        }
+        {
+            user && !isAdmin && <li><Link to="/dashboard/userHome">DASHBOARD</Link></li>
+        }
         <li><Link to="/menu">OUR MENU</Link></li>
         <li><Link to="/order/Salads">ORDER FOOD</Link></li>
         <li>
